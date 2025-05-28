@@ -17,12 +17,12 @@ class Subscription(Base):
     __tablename__ = "subscriptions"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, unique=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, unique=True, index=True)
     plan_id = Column(Integer, ForeignKey("plans.id"), nullable=False)
     start_date = Column(
-        DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False
     )
-    end_date = Column(DateTime, nullable=True)
+    end_date = Column(DateTime(timezone=False), nullable=True)
     status = Column(
         SqlEnum(SubscriptionStatus), default=SubscriptionStatus.ACTIVE, nullable=False
     )

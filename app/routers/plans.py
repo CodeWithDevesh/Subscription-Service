@@ -6,6 +6,8 @@ from app.models.plan import Plan
 from app.schemas.plan_schema import PlanSchema, PlanCreate
 from app.database import get_db
 from fastapi import HTTPException
+from app.auth.dependencies import get_current_admin
+from app.models.user import User
 
 router = APIRouter(prefix="/plans", tags=["Plans"])
 
@@ -18,7 +20,11 @@ async def get_all_plans(db: AsyncSession = Depends(get_db)):
 
 
 @router.post("/", response_model=PlanSchema)
-async def create_plan(plan_data: PlanCreate, db: AsyncSession = Depends(get_db)):
+async def create_plan(
+    plan_data: PlanCreate,
+    db: AsyncSession = Depends(get_db),
+    admin_user: User = Depends(get_current_admin),
+):
     try:
         plan_dict = plan_data.model_dump()
     except AttributeError:
@@ -37,7 +43,10 @@ async def create_plan(plan_data: PlanCreate, db: AsyncSession = Depends(get_db))
 
 @router.post("/{plan_id}", response_model=PlanSchema)
 async def update_plan(
-    plan_id: int, plan_data: PlanCreate, db: AsyncSession = Depends(get_db)
+    plan_id: int,
+    plan_data: PlanCreate,
+    db: AsyncSession = Depends(get_db),
+    admin_user: User = Depends(get_current_admin),
 ):
     existing_plan = await db.execute(select(Plan).where(Plan.id == plan_id))
     plan = existing_plan.scalar_one_or_none()
