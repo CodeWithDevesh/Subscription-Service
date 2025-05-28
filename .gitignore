@@ -1,4 +1,4 @@
 .env
 .venv
-app/__pycache__
-alembic/__pycache__
+__pycache__/
+*/__pycache__/

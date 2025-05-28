@@ -7,10 +7,13 @@ engine = create_async_engine(DATABASE_URI, echo=True)
 
 print("Creating session local for async database operations...")
 AsyncSessionLocal = sessionmaker(
-    bind=engine,
-    class_=AsyncSession,
-    expire_on_commit=False
+    bind=engine, class_=AsyncSession, expire_on_commit=False
 )
 
 print("Creating declarative base for ORM models...")
 Base = declarative_base()
+
+
+async def get_db():
+    async with AsyncSessionLocal() as session:
+        yield session
