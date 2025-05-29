@@ -1,39 +1,43 @@
 # Subscription Management Backend
 
-A scalable, production-ready backend built with **FastAPI**, **PostgreSQL**, **SQLAlchemy**, **Redis**, and **Celery** to manage user subscriptions and plan lifecycles.
+A scalable, production-ready backend built with **FastAPI**, **PostgreSQL**,
+**SQLAlchemy**, **Redis**, and **Celery** to manage user subscriptions and plan
+lifecycles.
 
 ## Deployed Demo
 
-Access the live API at: [https://subscription-backend.devesh.app](https://subscription-backend.devesh.app)
+Access the live API at:
+[http://ec2-13-201-98-2.ap-south-1.compute.amazonaws.com](http://ec2-13-201-98-2.ap-south-1.compute.amazonaws.com)
 
 ## API Documentation
 
-For detailed API endpoints and schemas, visit the interactive Swagger docs at: [https://subscription-backend.devesh.app/docs](https://subscription-backend.devesh.app/docs)
+For detailed API endpoints and schemas, visit the interactive Swagger docs at:
+[http://ec2-13-201-98-2.ap-south-1.compute.amazonaws.com/docs](http://ec2-13-201-98-2.ap-south-1.compute.amazonaws.com/docs)
 
 ## Features
 
-* JWT Authentication (Login/Signup)
-* Role-Based Access Control (Admin/User)
-* Create, Update, Cancel Subscriptions
-* Subscription Expiry handled by Celery Beat
-* Admin-only Plan Management (Create/Update/Delete Plans)
-* Full Test Suite with `pytest` and `httpx`
-* Retry Logic on DB Failures (`tenacity`)
-* Async support throughout
-* Modular, maintainable project structure
+-   JWT Authentication (Login/Signup)
+-   Role-Based Access Control (Admin/User)
+-   Create, Update, Cancel Subscriptions
+-   Subscription Expiry handled by Celery Beat
+-   Admin-only Plan Management (Create/Update/Delete Plans)
+-   Full Test Suite with `pytest` and `httpx`
+-   Retry Logic on DB Failures (`tenacity`)
+-   Async support throughout
+-   Modular, maintainable project structure
 
 ---
 
 ## Tech Stack
 
-* **FastAPI** - Async API framework
-* **PostgreSQL** - Main relational database
-* **SQLAlchemy** - Async ORM
-* **Alembic** - DB migrations
-* **Pydantic** - Schema validation
-* **Celery + Redis** - Background tasks & task queue
-* **Docker** - Containerization
-* **Pytest** - Testing framework
+-   **FastAPI** - Async API framework
+-   **PostgreSQL** - Main relational database
+-   **SQLAlchemy** - Async ORM
+-   **Alembic** - DB migrations
+-   **Pydantic** - Schema validation
+-   **Celery + Redis** - Background tasks & task queue
+-   **Docker** - Containerization
+-   **Pytest** - Testing framework
 
 ---
 
@@ -97,8 +101,8 @@ $ celery -A celery_worker.celery_app beat --loglevel=info
 
 ## Future Improvements
 
-* Rate Limiting (`slowapi`)
-* Swagger Auth for `/docs`
-* Subscription emails (welcome, renewal, expiry notifications)
+-   Rate Limiting (`slowapi`)
+-   Swagger Auth for `/docs`
+-   Subscription emails (welcome, renewal, expiry notifications)
 
 ---
