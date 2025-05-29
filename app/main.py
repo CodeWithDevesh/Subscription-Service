@@ -9,8 +9,10 @@ app.include_router(auth.router)
 app.include_router(subscription.router)
 
 
-@app.get("/")
+@app.get("/health", tags=["Health"])
 async def read_root():
     return {
-        "message": "Welcome to the FastAPI application!",
+        "status": "ok",
+        "message": "API is running",
+        "version": "1.0.0",
     }
