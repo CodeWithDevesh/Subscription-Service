@@ -26,8 +26,10 @@ class UserDetail(BaseModel):
     email: EmailStr
     is_admin: bool = False
 
-    class Config:
-        from_attributes = True
+    model_config = {
+        "from_attributes": True,
+        "validate_by_name": True,
+    }
 
 
 class User_Response(BaseModel):

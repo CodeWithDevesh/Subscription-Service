@@ -4,7 +4,6 @@ from fastapi import HTTPException
 from app.models.subscription import Subscription, SubscriptionStatus
 from app.schemas.subscription_schema import (
     SubscriptionCreate,
-    SubscriptionDetail,
     SubscriptionResponse,
     SubscriptionHistory,
 )
@@ -69,7 +68,7 @@ async def get_subs(user_id: int, db: AsyncSession):
     subs = result.scalar()
     if not subs:
         raise HTTPException(status_code=404, detail="No active subscription found")
-    return SubscriptionDetail(
+    return SubscriptionResponse(
         ok=True, message="Subscription retrieved successfully", data=subs
     )
 

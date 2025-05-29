@@ -30,16 +30,6 @@ async def create_subscription(
     return await create_subs(user.id, data, db)
 
 
-@router.get("/{user_id}", response_model=SubscriptionResponse)
-async def get_user_subscription(
-    user_id: int,
-    db: AsyncSession = Depends(get_db),
-    _admin: User = Depends(get_current_admin),
-):
-    "Get a user's subscription details (admin only)"
-    return await get_subs(user_id, db)
-
-
 @router.get("/active", response_model=SubscriptionHistory)
 async def get_active_subscriptions(
     db: AsyncSession = Depends(get_db),
@@ -47,14 +37,6 @@ async def get_active_subscriptions(
 ):
     "Get all active subscriptions (admin only)"
     return await get_active_subs(db)
-
-
-@router.get("/", response_model=SubscriptionResponse)
-async def get_subscription(
-    db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)
-):
-    "Get current user's subscription details"
-    return await get_subs(user.id, db)
 
 
 @router.get("/history/{user_id}", response_model=SubscriptionHistory)
@@ -74,6 +56,24 @@ async def get_subscription_history(
 ):
     "Get current user's subscription history"
     return await get_subs_history(user.id, db)
+
+
+@router.get("/", response_model=SubscriptionResponse)
+async def get_subscription(
+    db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)
+):
+    "Get current user's subscription details"
+    return await get_subs(user.id, db)
+
+
+@router.get("/{user_id}", response_model=SubscriptionResponse)
+async def get_user_subscription(
+    user_id: int,
+    db: AsyncSession = Depends(get_db),
+    _admin: User = Depends(get_current_admin),
+):
+    "Get a user's subscription details (admin only)"
+    return await get_subs(user_id, db)
 
 
 @router.put("/{user_id}", response_model=SubscriptionResponse)
