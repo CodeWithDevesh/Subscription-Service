@@ -1,8 +1,10 @@
 from dotenv import load_dotenv
 import os
+from app.utils.logger import get_logger
 
+logger = get_logger(__name__)
 
-print("Loading environment variables from .env file...")
+logger.info("Loading environment variables from .env file...")
 load_dotenv()
 
 DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1")

@@ -8,8 +8,9 @@ from app.database import get_db
 from fastapi import HTTPException
 from app.auth.dependencies import get_current_admin
 from app.models.user import User
+from app.utils.retry import retry_on_db_error
 
-
+@retry_on_db_error
 async def get_all_plans(db: AsyncSession) -> List[Plan]:
     result = await db.execute(select(Plan))
     plans = result.scalars().all()
@@ -17,7 +18,7 @@ async def get_all_plans(db: AsyncSession) -> List[Plan]:
         return PlanListResponse(ok=False, message="no plans found", data=[])
     return PlanListResponse(data=plans)
 
-
+@retry_on_db_error
 async def get_plan_by_id(plan_id: int, db: AsyncSession) -> PlanResponse:
     existing_plan = await db.execute(select(Plan).where(Plan.id == plan_id))
     plan = existing_plan.scalar_one_or_none()
@@ -25,7 +26,7 @@ async def get_plan_by_id(plan_id: int, db: AsyncSession) -> PlanResponse:
         raise HTTPException(status_code=404, detail="Plan not found")
     return PlanResponse(ok=True, message="Plan retrieved successfully", data=plan)
 
-
+@retry_on_db_error
 async def create_plan(plan_data: PlanCreate, db: AsyncSession) -> PlanResponse:
     try:
         plan_dict = plan_data.model_dump()
@@ -64,7 +65,7 @@ async def update_plan(
     await db.refresh(plan)
     return PlanResponse(ok=True, message="Plan updated successfully", data=plan)
 
-
+@retry_on_db_error
 async def delete_plan(plan_id: int, db: AsyncSession) -> PlanResponse:
     existing_plan = await db.execute(select(Plan).where(Plan.id == plan_id))
     plan = existing_plan.scalar_one_or_none()

@@ -11,8 +11,10 @@ from app.schemas.subscription_schema import (
 from app.models.user import User
 from app.models.plan import Plan
 from datetime import datetime, timedelta, timezone
+from app.utils.retry import retry_on_db_error
 
 
+@retry_on_db_error
 async def create_subs(
     user_id: int,
     data: SubscriptionCreate,
@@ -56,6 +58,7 @@ async def create_subs(
     )
 
 
+@retry_on_db_error
 async def get_subs(user_id: int, db: AsyncSession):
     result = await db.execute(
         select(Subscription).where(
@@ -71,6 +74,7 @@ async def get_subs(user_id: int, db: AsyncSession):
     )
 
 
+@retry_on_db_error
 async def get_subs_history(
     user_id: int,
     db: AsyncSession,
@@ -84,6 +88,7 @@ async def get_subs_history(
     return SubscriptionHistory(
         ok=True, message="Subscription history retrieved successfully", data=subs
     )
+
 
 
 async def update_subs(
@@ -119,6 +124,7 @@ async def update_subs(
     )
 
 
+@retry_on_db_error
 async def cancel_subs(user_id: int, db: AsyncSession):
     result = await db.execute(
         select(Subscription).where(
@@ -140,11 +146,10 @@ async def cancel_subs(user_id: int, db: AsyncSession):
     )
 
 
+@retry_on_db_error
 async def get_active_subs(db: AsyncSession):
     result = await db.execute(
-        select(Subscription).where(
-            Subscription.status == SubscriptionStatus.ACTIVE
-        )
+        select(Subscription).where(Subscription.status == SubscriptionStatus.ACTIVE)
     )
     subs = result.scalars().all()
     if not subs:
