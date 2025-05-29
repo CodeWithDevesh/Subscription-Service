@@ -20,11 +20,11 @@ class Subscription(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
     plan_id = Column(Integer, ForeignKey("plans.id"), nullable=False)
     start_date = Column(
-        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        nullable=False,
     )
-    end_date = Column(
-        DateTime(timezone=True), nullable=False
-    )
+    end_date = Column(DateTime(timezone=True), nullable=False)
     status = Column(
         SqlEnum(SubscriptionStatus), default=SubscriptionStatus.ACTIVE, nullable=False
     )
