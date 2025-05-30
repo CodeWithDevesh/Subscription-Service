@@ -9,10 +9,13 @@ lifecycles.
 Access the live API at:
 [http://ec2-13-201-98-2.ap-south-1.compute.amazonaws.com](http://ec2-13-201-98-2.ap-south-1.compute.amazonaws.com)
 
+> **Note:** If you get a "connection refused" error, ensure you are accessing the API via **http** and not **https**.
+
 ## API Documentation
 
 For detailed API endpoints and schemas, visit the interactive Swagger docs at:
 [http://ec2-13-201-98-2.ap-south-1.compute.amazonaws.com/docs](http://ec2-13-201-98-2.ap-south-1.compute.amazonaws.com/docs)
+
 
 ## Features
 
